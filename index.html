@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI Bilangan Desimal - MI Kelas VI | Kanwil Kemenag Gorontalo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fffbe6',
+                            100: '#fff3b0',
+                            200: '#ffe670',
+                            300: '#ffd433',
+                            400: '#ffc107', // Utama Kuning Warm
+                            500: '#f59e0b',
+                            600: '#d97706',
+                            700: '#b45309',
+                            800: '#92400e',
+                            900: '#78350f',
+                        },
+                        madrasah: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            700: '#15803d',
+                            800: '#166534',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for crisp offline-friendly icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FEFCE8;
+            overflow-x: hidden;
+        }
+
+        .font-heading {
+            font-family: 'Fredoka', cursive, sans-serif;
+        }
+
+        /* Animated Clouds in Sky */
+        .sky-container {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(180deg, #38bdf8 0%, #bae6fd 60%, #fef08a 100%);
+        }
+
+        .cloud {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 50px;
+            opacity: 0.9;
+            animation: moveClouds linear infinite;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.05));
+        }
+
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 50%;
+        }
+
+        .cloud-1 {
+            width: 140px;
+            height: 45px;
+            top: 15%;
+            animation-duration: 28s;
+        }
+        .cloud-1::before { width: 50px; height: 50px; top: -20px; left: 20px; }
+        .cloud-1::after { width: 60px; height: 60px; top: -30px; right: 20px; }
+
+        .cloud-2 {
+            width: 200px;
+            height: 60px;
+            top: 40%;
+            animation-duration: 38s;
+            animation-delay: -12s;
+        }
+        .cloud-2::before { width: 70px; height: 70px; top: -30px; left: 30px; }
+        .cloud-2::after { width: 80px; height: 80px; top: -40px; right: 30px; }
+
+        .cloud-3 {
+            width: 100px;
+            height: 35px;
+            top: 70%;
+            animation-duration: 22s;
+            animation-delay: -5s;
+        }
+        .cloud-3::before { width: 35px; height: 35px; top: -15px; left: 15px; }
+        .cloud-3::after { width: 45px; height: 45px; top: -20px; right: 15px; }
+
+        @keyframes moveClouds {
+            0% { left: -220px; }
+            100% { left: 100vw; }
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(254, 240, 138, 0.6);
+        }
+
+        .card-hover {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -6px rgba(217, 119, 6, 0.18);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fef08a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col text-slate-800">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b-2 border-amber-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('cover')">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-400 to-yellow-300 flex items-center justify-center text-amber-900 font-bold text-xl shadow-inner border border-amber-300">
+                        <i class="fa-solid font-heading">0.1</i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-bold tracking-wider uppercase text-amber-700 block leading-none">MPI Matematika MI</span>
+                        <span class="font-heading text-lg font-bold text-slate-900 leading-tight">Bilangan Desimal</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Navigation Menu -->
+                <nav class="hidden md:flex items-center space-x-1 lg:space-x-2">
+                    <button onclick="switchTab('cover')" id="nav-cover" class="nav-btn active px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 bg-amber-400 text-slate-900 shadow-sm">
+                        <i class="fa-solid fa-house"></i> Beranda
+                    </button>
+                    <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 hover:bg-amber-100 text-slate-700">
+                        <i class="fa-solid fa-book-open"></i> Modul Materi
+                    </button>
+                    <button onclick="switchTab('simulator')" id="nav-simulator" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 hover:bg-amber-100 text-slate-700">
+                        <i class="fa-solid fa-flask"></i> Lab Simulator
+                    </button>
+                    <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 hover:bg-amber-100 text-slate-700">
+                        <i class="fa-solid fa-pen-to-square"></i> Kuis Evaluasi
+                    </button>
+                    <button onclick="switchTab('info')" id="nav-info" class="nav-btn px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 hover:bg-amber-100 text-slate-700">
+                        <i class="fa-solid fa-circle-info"></i> Info & Referensi
+                    </button>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="p-2 rounded-xl text-slate-700 hover:bg-amber-100 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-amber-50 border-b border-amber-200 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('cover'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-amber-200 flex items-center gap-3">
+                <i class="fa-solid fa-house text-amber-600"></i> Beranda Utama
+            </button>
+            <button onclick="switchTab('materi'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-amber-200 flex items-center gap-3">
+                <i class="fa-solid fa-book-open text-amber-600"></i> Modul Materi Lengkap
+            </button>
+            <button onclick="switchTab('simulator'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-amber-200 flex items-center gap-3">
+                <i class="fa-solid fa-flask text-amber-600"></i> Laboratorium Simulator
+            </button>
+            <button onclick="switchTab('kuis'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-amber-200 flex items-center gap-3">
+                <i class="fa-solid fa-pen-to-square text-amber-600"></i> Kuis Evaluasi Formatif
+            </button>
+            <button onclick="switchTab('info'); toggleMobileMenu()" class="w-full text-left px-3 py-2 rounded-lg text-sm font-semibold text-slate-800 hover:bg-amber-200 flex items-center gap-3">
+                <i class="fa-solid fa-circle-info text-amber-600"></i> Pengembang & Referensi
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+
+        <!-- ================= SECTION 1: COVER / BERANDA ================= -->
+        <section id="tab-cover" class="tab-content block">
+            <!-- Sky Banner with Floating Clouds -->
+            <div class="sky-container py-12 md:py-20 px-4 relative min-h-[420px] flex items-center justify-center border-b-4 border-amber-300">
+                <!-- Clouds -->
+                <div class="cloud cloud-1"></div>
+                <div class="cloud cloud-2"></div>
+                <div class="cloud cloud-3"></div>
+
+                <div class="max-w-4xl mx-auto text-center relative z-10">
+                    <span class="inline-flex items-center gap-2 bg-white/90 backdrop-blur px-4 py-1.5 rounded-full text-xs sm:text-sm font-bold text-amber-800 shadow-md mb-4 border border-amber-200 animate-bounce">
+                        <i class="fa-solid fa-star text-yellow-500"></i> Kurikulum Merdeka - Fase C Kelas VI
+                    </span>
+                    
+                    <!-- Enlarged Prominent Topic Title -->
+                    <h1 class="font-heading text-4xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 drop-shadow-md tracking-tight leading-none mb-4">
+                        OPERASI HITUNG <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 via-amber-500 to-yellow-600 drop-shadow-sm">BILANGAN DESIMAL</span>
+                    </h1>
+                    
+                    <p class="text-slate-800 text-base sm:text-xl font-medium max-w-2xl mx-auto mb-8 leading-relaxed bg-white/60 backdrop-blur p-3 rounded-2xl border border-white/80 shadow-sm">
+                        Eksplorasi interaktif matematika madrasah yang seru, visual, dan menyenangkan untuk mencintai ilmu serta menyayangi sesama!
+                    </p>
+
+                    <div class="flex flex-wrap items-center justify-center gap-4">
+                        <button onclick="switchTab('materi')" class="px-8 py-4 bg-gradient-to-r from-amber-400 to-yellow-400 hover:from-amber-500 hover:to-yellow-500 text-slate-900 font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1 flex items-center gap-3 text-lg border-2 border-yellow-200">
+                            <i class="fa-solid fa-rocket text-xl text-amber-900"></i> Mulai Belajar Sekarang
+                        </button>
+                        <button onclick="openModal('modal-tujuan')" class="px-6 py-4 bg-white hover:bg-amber-50 text-slate-800 font-bold rounded-2xl shadow-md hover:shadow-lg transition-all border-2 border-amber-300 flex items-center gap-2 text-lg">
+                            <i class="fa-solid fa-bullseye text-amber-600"></i> Tujuan Pembelajaran
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                    <!-- Card 1 -->
+                    <div onclick="switchTab('materi')" class="glass-card rounded-3xl p-6 card-hover cursor-pointer border-t-4 border-t-amber-400 shadow-md">
+                        <div class="w-14 h-14 rounded-2xl bg-amber-100 flex items-center justify-center text-amber-600 text-2xl mb-4">
+                            <i class="fa-solid fa-book-bookmark"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-slate-900 mb-2">Modul Materi Visual</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            Pelajari nilai tempat desimal, konversi pecahan, serta operasi penjumlahan, pengurangan, perkalian, dan pembagian secara bertahap.
+                        </p>
+                        <span class="text-xs font-bold text-amber-700 flex items-center gap-1 group">
+                            Buka Materi <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div onclick="switchTab('simulator')" class="glass-card rounded-3xl p-6 card-hover cursor-pointer border-t-4 border-t-emerald-400 shadow-md">
+                        <div class="w-14 h-14 rounded-2xl bg-emerald-100 flex items-center justify-center text-emerald-600 text-2xl mb-4">
+                            <i class="fa-solid fa-sliders"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-slate-900 mb-2">Laboratorium Simulator</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            Uji coba langsung konversi pecahan dan visualisasi operasi desimal dengan respon visual seketika (real-time).
+                        </p>
+                        <span class="text-xs font-bold text-emerald-700 flex items-center gap-1 group">
+                            Coba Simulator <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div onclick="switchTab('kuis')" class="glass-card rounded-3xl p-6 card-hover cursor-pointer border-t-4 border-t-sky-400 shadow-md">
+                        <div class="w-14 h-14 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-600 text-2xl mb-4">
+                            <i class="fa-solid fa-trophy"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-slate-900 mb-2">Kuis & Uji Kemampuan</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed mb-4">
+                            Uji pemahamanmu lewat 10 soal variatif (Pilihan Ganda, Kompleks, Benar/Salah, Menjodohkan) lengkap dengan pembahasan!
+                        </p>
+                        <span class="text-xs font-bold text-sky-700 flex items-center gap-1 group">
+                            Mulai Kuis <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Developer Quick Card Banner -->
+                <div class="bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-400 rounded-3xl p-6 sm:p-8 shadow-lg text-slate-900 flex flex-col sm:flex-row items-center justify-between gap-6 border-2 border-yellow-200">
+                    <div class="flex items-center gap-5">
+                        <img src="https://iili.io/ncNNZDF.jpg" onerror="this.src='https://placehold.co/120x120/f59e0b/ffffff?text=Guru+MI'" alt="Sri Meylanti S. Ali" class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl object-cover border-4 border-white shadow-md">
+                        <div>
+                            <span class="bg-white/80 text-amber-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-1 inline-block">Pengembang Media</span>
+                            <h4 class="font-heading text-2xl font-bold">Sri Meylanti S. Ali</h4>
+                            <p class="text-amber-950 font-medium text-sm"><i class="fa-solid fa-school mr-1"></i> MIS Al-Falah Gorontalo</p>
+                            <p class="text-xs text-amber-900 mt-1">Kantor Wilayah Kementerian Agama Provinsi Gorontalo</p>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('info')" class="px-5 py-3 bg-slate-900 hover:bg-slate-800 text-white font-bold rounded-xl shadow transition-all text-sm whitespace-nowrap flex items-center gap-2">
+                        <i class="fa-solid fa-user-gear"></i> Detail Profil & Referensi
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 2: MODUL MATERI LENGKAP ================= -->
+        <section id="tab-materi" class="tab-content hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header Module Navigation -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4 bg-white p-4 rounded-2xl shadow-sm border border-amber-200">
+                <div>
+                    <h2 class="font-heading text-2xl font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open text-amber-500"></i> Modul Pembelajaran Bilangan Desimal
+                    </h2>
+                    <p class="text-xs text-slate-500">Gunakan navigasi slide di bawah untuk mempelajari setiap konsep dengan cermat.</p>
+                </div>
+                <!-- Slide Indicators -->
+                <div class="flex items-center gap-1 overflow-x-auto pb-2 md:pb-0">
+                    <button onclick="goToSlide(1)" id="slide-btn-1" class="slide-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-slate-900 transition">1. Nilai Tempat</button>
+                    <button onclick="goToSlide(2)" id="slide-btn-2" class="slide-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-amber-100 transition">2. Konversi Pecahan</button>
+                    <button onclick="goToSlide(3)" id="slide-btn-3" class="slide-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-amber-100 transition">3. Penjumlahan & Pengurangan</button>
+                    <button onclick="goToSlide(4)" id="slide-btn-4" class="slide-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-amber-100 transition">4. Perkalian & Pembagian</button>
+                    <button onclick="goToSlide(5)" id="slide-btn-5" class="slide-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-amber-100 transition">5. Soal Cerita</button>
+                    <button onclick="goToSlide(6)" id="slide-btn-6" class="slide-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-amber-100 transition">6. Membandingkan</button>
+                    <button onclick="goToSlide(7)" id="slide-btn-7" class="slide-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-amber-100 transition">7. Pembulatan</button>
+                </div>
+            </div>
+
+            <!-- Slide Display Container -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-amber-200 min-h-[480px] relative">
+                
+                <!-- SLIDE 1: Nilai Tempat -->
+                <div id="materi-slide-1" class="materi-slide block">
+                    <div class="flex items-center gap-3 mb-4 border-b pb-3 border-slate-100">
+                        <span class="w-8 h-8 rounded-full bg-amber-400 text-amber-950 font-bold flex items-center justify-center text-sm">1</span>
+                        <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900">Konsep Dasar & Nilai Tempat Bilangan Desimal</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <p class="text-slate-700 leading-relaxed mb-4 text-sm sm:text-base">
+                                Bilangan desimal adalah bentuk lain dari pecahan dengan penyebut sepuluh, seratus, seribu, dan seterusnya, yang ditandai dengan tanda koma ( , ).
+                            </p>
+                            <div class="bg-amber-50 p-4 rounded-2xl border-l-4 border-amber-500 mb-4 text-sm">
+                                <h4 class="font-bold text-amber-900 mb-1"><i class="fa-solid fa-lightbulb"></i> Contoh Nilai Tempat pada Bilangan 15,378:</h4>
+                                <ul class="list-disc list-inside text-slate-700 space-y-1">
+                                    <li><b>1</b> = Puluhan (Nilai: 10)</li>
+                                    <li><b>5</b> = Satuan (Nilai: 5)</li>
+                                    <li><b>,</b> = Koma Desimal</li>
+                                    <li><b>3</b> = Persepuluhan (Nilai: 0,3 atau 3/10)</li>
+                                    <li><b>7</b> = Perseratusan (Nilai: 0,07 atau 7/100)</li>
+                                    <li><b>8</b> = Perseribuan (Nilai: 0,008 atau 8/1000)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-yellow-50 rounded-2xl p-6 border border-yellow-200 text-center">
+                            <h4 class="font-heading font-bold text-slate-800 mb-4 text-lg">Visualisasi Diagram Nilai Tempat</h4>
+                            <div class="flex items-center justify-center gap-2 font-mono text-2xl sm:text-3xl font-bold">
+                                <div class="p-3 bg-white rounded-xl shadow-sm border border-amber-300 text-slate-800">1<div class="text-[10px] font-sans font-normal text-slate-500">Puluhan</div></div>
+                                <div class="p-3 bg-white rounded-xl shadow-sm border border-amber-300 text-slate-800">5<div class="text-[10px] font-sans font-normal text-slate-500">Satuan</div></div>
+                                <div class="text-amber-600 font-extrabold text-4xl">,</div>
+                                <div class="p-3 bg-amber-100 rounded-xl shadow-sm border border-amber-400 text-amber-900">3<div class="text-[10px] font-sans font-normal text-amber-800">1/10</div></div>
+                                <div class="p-3 bg-amber-100 rounded-xl shadow-sm border border-amber-400 text-amber-900">7<div class="text-[10px] font-sans font-normal text-amber-800">1/100</div></div>
+                                <div class="p-3 bg-amber-100 rounded-xl shadow-sm border border-amber-400 text-amber-900">8<div class="text-[10px] font-sans font-normal text-amber-800">1/1000</div></div>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-4 italic">Semakin ke kanan dari koma, nilai tempatnya berkurang sepuluh kalinya!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 2: Konversi -->
+                <div id="materi-slide-2" class="materi-slide hidden">
+                    <div class="flex items-center gap-3 mb-4 border-b pb-3 border-slate-100">
+                        <span class="w-8 h-8 rounded-full bg-amber-400 text-amber-950 font-bold flex items-center justify-center text-sm">2</span>
+                        <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900">Mengubah Pecahan ke Desimal & Sebaliknya</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-amber-50/70 p-5 rounded-2xl border border-amber-200">
+                            <h4 class="font-heading font-bold text-amber-900 text-lg mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-arrow-right-arrow-left"></i> Pecahan Biasa ➔ Desimal
+                            </h4>
+                            <p class="text-sm text-slate-700 mb-3">
+                                Cara terpopuler adalah mengubah penyebut pecahan menjadi 10, 100, atau 1000, atau dengan pembagian bersusun (porogapit).
+                            </p>
+                            <div class="bg-white p-3 rounded-xl border border-amber-200 text-sm space-y-2">
+                                <p><b>Contoh 1:</b> <sup>3</sup>/<sub>5</sub></p>
+                                <p class="text-slate-600">Kalikan pembilang dan penyebut dengan 2 agar penyebut menjadi 10:</p>
+                                <p class="font-mono text-amber-800 font-bold"><sup>(3 × 2)</sup>/<sub>(5 × 2)</sub> = <sup>6</sup>/<sub>10</sub> = 0,6</p>
+                            </div>
+                        </div>
+
+                        <div class="bg-sky-50/70 p-5 rounded-2xl border border-sky-200">
+                            <h4 class="font-heading font-bold text-sky-900 text-lg mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-arrow-left-long"></i> Desimal ➔ Pecahan Biasa
+                            </h4>
+                            <p class="text-sm text-slate-700 mb-3">
+                                Hitung jumlah angka di belakang koma untuk menentukan penyebut (10, 100, dst), lalu sederhanakan.
+                            </p>
+                            <div class="bg-white p-3 rounded-xl border border-sky-200 text-sm space-y-2">
+                                <p><b>Contoh 2:</b> 0,75</p>
+                                <p class="text-slate-600">Ada 2 angka di belakang koma (perseratusan):</p>
+                                <p class="font-mono text-sky-800 font-bold">0,75 = <sup>75</sup>/<sub>100</sub> = (dibagi 25) = <sup>3</sup>/<sub>4</sub></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 3: Penjumlahan & Pengurangan -->
+                <div id="materi-slide-3" class="materi-slide hidden">
+                    <div class="flex items-center gap-3 mb-4 border-b pb-3 border-slate-100">
+                        <span class="w-8 h-8 rounded-full bg-amber-400 text-amber-950 font-bold flex items-center justify-center text-sm">3</span>
+                        <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900">Penjumlahan & Pengurangan Bilangan Desimal</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <div class="bg-emerald-50 p-4 rounded-2xl border-l-4 border-emerald-500 mb-4">
+                                <h4 class="font-bold text-emerald-900 mb-1"><i class="fa-solid fa-key"></i> Kunci Utama Operasi:</h4>
+                                <p class="text-sm text-slate-700">
+                                    Luruskan <b>tanda koma desimal ( , )</b> secara sejajar tegak lurus sebelum melakukan penjumlahan atau pengurangan bersusun!
+                                </p>
+                            </div>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Jika banyaknya angka di belakang koma tidak sama, kita boleh menambahkan angka 0 di paling belakang tanpa mengubah nilai bilangan tersebut (contoh: 2,5 = 2,50).
+                            </p>
+                        </div>
+                        <div class="bg-slate-900 text-white p-5 rounded-2xl font-mono text-center shadow-md">
+                            <h5 class="text-amber-400 font-sans font-bold text-sm mb-3">Contoh Bersusun: 12,45 + 3,8</h5>
+                            <div class="inline-block text-right space-y-1 text-lg">
+                                <div>&nbsp;&nbsp;12,45</div>
+                                <div>+&nbsp;&nbsp;3,80 <span class="text-xs text-amber-300 font-sans">(tambah 0)</span></div>
+                                <div class="border-t-2 border-white pt-1 text-amber-300 font-bold">&nbsp;&nbsp;16,25</div>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-3 font-sans">Koma sejajar lurus ke bawah!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 4: Perkalian & Pembagian -->
+                <div id="materi-slide-4" class="materi-slide hidden">
+                    <div class="flex items-center gap-3 mb-4 border-b pb-3 border-slate-100">
+                        <span class="w-8 h-8 rounded-full bg-amber-400 text-amber-950 font-bold flex items-center justify-center text-sm">4</span>
+                        <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900">Perkalian & Pembagian Desimal</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-purple-50 p-5 rounded-2xl border border-purple-200">
+                            <h4 class="font-heading font-bold text-purple-900 text-lg mb-2"><i class="fa-solid fa-xmark"></i> Perkalian Desimal</h4>
+                            <ol class="list-decimal list-inside text-sm text-slate-700 space-y-2">
+                                <li>Kalikan angka seolah-olah tidak ada koma.</li>
+                                <li>Hitung total jumlah angka di belakang koma pada semua faktor perkalian.</li>
+                                <li>Letakkan koma pada hasil akhir sebanyak jumlah tersebut dari kanan.</li>
+                            </ol>
+                            <div class="mt-3 bg-white p-3 rounded-xl border border-purple-200 text-xs font-mono">
+                                0,4 (1 angka) × 0,2 (1 angka) = 0,08 (2 angka desimal)
+                            </div>
+                        </div>
+
+                        <div class="bg-rose-50 p-5 rounded-2xl border border-rose-200">
+                            <h4 class="font-heading font-bold text-rose-900 text-lg mb-2"><i class="fa-solid fa-divide"></i> Pembagian Desimal</h4>
+                            <ol class="list-decimal list-inside text-sm text-slate-700 space-y-2">
+                                <li>Kalikan pembagi dan yang dibagi dengan 10, 100, dst. hingga pembagi menjadi bilangan bulat.</li>
+                                <li>Lakukan pembagian biasa.</li>
+                            </ol>
+                            <div class="mt-3 bg-white p-3 rounded-xl border border-rose-200 text-xs font-mono">
+                                4,8 ÷ 0,6 ➔ (Kalikan 10) ➔ 48 ÷ 6 = 8
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 5: Soal Cerita Agraris Gorontalo -->
+                <div id="materi-slide-5" class="materi-slide hidden">
+                    <div class="flex items-center gap-3 mb-4 border-b pb-3 border-slate-100">
+                        <span class="w-8 h-8 rounded-full bg-amber-400 text-amber-950 font-bold flex items-center justify-center text-sm">5</span>
+                        <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900">Soal Cerita Kontekstual & Karakter Madrasah</h3>
+                    </div>
+                    <div class="bg-amber-50 p-5 rounded-2xl border border-amber-300">
+                        <div class="flex items-start gap-4">
+                            <div class="text-4xl text-amber-600 hidden sm:block"><i class="fa-solid fa-wheat-awn"></i></div>
+                            <div>
+                                <h4 class="font-heading font-bold text-amber-950 text-lg mb-2">Penerapan Hasil Panen Jagung Gorontalo</h4>
+                                <p class="text-slate-700 text-sm leading-relaxed mb-4">
+                                    Pak Ismail memanen <b>12,5 kg</b> jagung hibrida dari kebunnya di Gorontalo. Sebagai wujud <i>cinta sesama & kepedulian sosial</i>, beliau membagikan <b>4,25 kg</b> kepada tetangganya yang membutuhkan, lalu membeli tambahan dari pasar lokal sebanyak <b>2,75 kg</b>. Berapa kg total jagung Pak Ismail sekarang?
+                                </p>
+                                <div class="bg-white p-4 rounded-xl border border-amber-300 text-sm space-y-2">
+                                    <p class="font-bold text-slate-800">Langkah Penyelesaian:</p>
+                                    <p>1. Sisa setelah dibagi: <span class="font-mono text-amber-800">12,50 - 4,25 = 8,25 kg</span></p>
+                                    <p>2. Total setelah beli lagi: <span class="font-mono text-amber-800 font-bold">8,25 + 2,75 = 11,00 kg</span></p>
+                                    <p class="text-emerald-700 font-semibold"><i class="fa-solid fa-check"></i> Hasil Akhir: Pak Ismail memiliki 11 kg jagung.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 6: Membandingkan -->
+                <div id="materi-slide-6" class="materi-slide hidden">
+                    <div class="flex items-center gap-3 mb-4 border-b pb-3 border-slate-100">
+                        <span class="w-8 h-8 rounded-full bg-amber-400 text-amber-950 font-bold flex items-center justify-center text-sm">6</span>
+                        <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900">Membandingkan & Mengurutkan Desimal</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div>
+                            <p class="text-slate-700 leading-relaxed mb-4 text-sm sm:text-base">
+                                Untuk membandingkan bilangan desimal, pastikan tanda komanya lurus, lalu bandingkan angka dari kiri ke kanan (mulai dari nilai tempat yang paling besar).
+                            </p>
+                            <div class="bg-indigo-50 p-4 rounded-2xl border-l-4 border-indigo-500 mb-4 text-sm">
+                                <h4 class="font-bold text-indigo-900 mb-1"><i class="fa-solid fa-balance-scale"></i> Contoh: 3,45 vs 3,6</h4>
+                                <ul class="list-disc list-inside text-slate-700 space-y-2">
+                                    <li>Samakan banyak angka di belakang koma: <b>3,45</b> dan <b>3,60</b>.</li>
+                                    <li>Bandingkan satuannya: Keduanya sama-sama <b>3</b>.</li>
+                                    <li>Bandingkan persepuluhannya: <b>4</b> kurang dari <b>6</b>.</li>
+                                    <li>Kesimpulan: <b class="font-mono bg-white px-2 py-1 rounded">3,45 < 3,6</b></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="bg-white rounded-2xl p-6 border border-slate-200 text-center shadow-sm">
+                            <h4 class="font-heading font-bold text-slate-800 mb-4 text-lg">Mengurutkan dari Terkecil:</h4>
+                            <div class="font-mono bg-slate-100 p-3 rounded-lg mb-4 text-sm font-bold text-slate-600">
+                                0,8 &nbsp; | &nbsp; 0,25 &nbsp; | &nbsp; 1,3 &nbsp; | &nbsp; 0,745
+                            </div>
+                            <div class="space-y-1 text-sm text-left mb-4 px-4 text-slate-600">
+                                <div>1. Samakan desimal: 0,800 ; 0,250 ; 1,300 ; 0,745</div>
+                                <div>2. Bandingkan nilainya secara berurutan.</div>
+                            </div>
+                            <div class="font-bold text-emerald-600 text-lg flex flex-wrap items-center justify-center gap-2">
+                                0,25 <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i> 0,745 <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i> 0,8 <i class="fa-solid fa-chevron-right text-xs text-slate-400"></i> 1,3
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SLIDE 7: Pembulatan -->
+                <div id="materi-slide-7" class="materi-slide hidden">
+                    <div class="flex items-center gap-3 mb-4 border-b pb-3 border-slate-100">
+                        <span class="w-8 h-8 rounded-full bg-amber-400 text-amber-950 font-bold flex items-center justify-center text-sm">7</span>
+                        <h3 class="font-heading text-xl sm:text-2xl font-bold text-slate-900">Pembulatan Bilangan Desimal</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                        <div class="bg-orange-50 p-5 rounded-2xl border border-orange-200 h-full">
+                            <h4 class="font-heading font-bold text-orange-900 text-lg mb-3 flex items-center gap-2">
+                                <i class="fa-solid fa-scissors"></i> Aturan Pembulatan
+                            </h4>
+                            <ul class="space-y-3 text-sm text-slate-700">
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-caret-down text-rose-500 mt-1 text-lg"></i>
+                                    <div>Jika angka di sebelah kanan batasan bernilai <b>0, 1, 2, 3, atau 4</b>, maka bulatkan <b>ke bawah</b> (angka tetap).</div>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <i class="fa-solid fa-caret-up text-emerald-500 mt-1 text-lg"></i>
+                                    <div>Jika angka di sebelah kanan batasan bernilai <b>5, 6, 7, 8, atau 9</b>, maka bulatkan <b>ke atas</b> (angka bertambah 1).</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                                <p class="text-xs font-bold text-slate-500 uppercase mb-1">Contoh 1: Ke Satuan Terdekat</p>
+                                <div class="font-mono text-xl text-slate-800 font-bold">12,<span class="text-rose-500 underline decoration-2">4</span>5 &nbsp;➔&nbsp; 12</div>
+                                <p class="text-xs text-slate-600 mt-1">Angka persepuluhannya adalah 4 (Bulatkan ke bawah).</p>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                                <p class="text-xs font-bold text-slate-500 uppercase mb-1">Contoh 2: Ke Persepuluhan</p>
+                                <div class="font-mono text-xl text-slate-800 font-bold">8,3<span class="text-emerald-500 underline decoration-2">7</span> &nbsp;➔&nbsp; 8,4</div>
+                                <p class="text-xs text-slate-600 mt-1">Angka perseratusannya adalah 7 (Bulatkan ke atas).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide Navigation Controls Footer -->
+                <div class="flex items-center justify-between mt-8 pt-4 border-t border-slate-100">
+                    <button id="prev-slide-btn" onclick="changeSlide(-1)" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Slide Sebelumnya
+                    </button>
+                    <span id="slide-indicator" class="text-xs font-bold text-amber-800 bg-amber-100 px-3 py-1 rounded-full">1 / 7</span>
+                    <button id="next-slide-btn" onclick="changeSlide(1)" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-500 text-amber-950 font-bold text-sm transition flex items-center gap-2">
+                        Slide Selanjutnya <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= SECTION 3: LAB SIMULATOR INTERAKTIF ================= -->
+        <section id="tab-simulator" class="tab-content hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="mb-6">
+                <h2 class="font-heading text-2xl font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-flask text-emerald-600"></i> Laboratorium Simulator Bilangan Desimal
+                </h2>
+                <p class="text-sm text-slate-600">Pilih modul simulator interaktif di bawah ini untuk bereksperimen!</p>
+            </div>
+
+            <!-- Simulator Sub-tabs -->
+            <div class="flex flex-wrap gap-2 mb-6 border-b border-amber-200 pb-3">
+                <button onclick="switchSim('sim-p2d')" id="sim-tab-p2d" class="sim-nav-btn px-4 py-2 rounded-xl text-sm font-bold bg-amber-400 text-slate-900 shadow-sm">
+                    <i class="fa-solid fa-calculator"></i> Pecahan ➔ Desimal
+                </button>
+                <button onclick="switchSim('sim-d2p')" id="sim-tab-d2p" class="sim-nav-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-amber-100">
+                    <i class="fa-solid fa-arrows-rotate"></i> Desimal ➔ Pecahan
+                </button>
+                <button onclick="switchSim('sim-add')" id="sim-tab-add" class="sim-nav-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-amber-100">
+                    <i class="fa-solid fa-plus-minus"></i> Penjumlahan & Pengurangan
+                </button>
+                <button onclick="switchSim('sim-mul')" id="sim-tab-mul" class="sim-nav-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-amber-100">
+                    <i class="fa-solid fa-xmark"></i> Perkalian & Pembagian
+                </button>
+            </div>
+
+            <!-- SIMULATOR 1: Pecahan biasa ke Desimal -->
+            <div id="sim-p2d" class="sim-block block bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-amber-200">
+                <h3 class="font-heading text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-amber-500"></i> Simulator 1: Ubah Pecahan Biasa ke Desimal
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-6 bg-amber-50 p-6 rounded-2xl border border-amber-200">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">
+                                Isi Angka Pembilang Atas (a):
+                            </label>
+                            <input type="number" id="input-pembilang" value="3" oninput="updateSimP2D()" class="w-full p-3 bg-white border-2 border-amber-300 rounded-xl outline-none focus:border-amber-500 text-amber-800 font-extrabold text-xl font-mono shadow-sm transition-all">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">
+                                Isi Angka Penyebut Bawah (b):
+                            </label>
+                            <input type="number" id="input-penyebut" value="5" oninput="updateSimP2D()" class="w-full p-3 bg-white border-2 border-amber-300 rounded-xl outline-none focus:border-amber-500 text-amber-800 font-extrabold text-xl font-mono shadow-sm transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Visual Output Display -->
+                    <div class="bg-gradient-to-br from-amber-100 to-yellow-50 p-6 rounded-2xl text-center border-2 border-amber-300">
+                        <p class="text-xs font-bold uppercase tracking-wider text-amber-800 mb-2">Bentuk Pecahan Biasa</p>
+                        <div class="font-mono text-3xl font-bold text-slate-800 inline-block">
+                            <div id="out-frac-a" class="border-b-2 border-slate-800 pb-1">3</div>
+                            <div id="out-frac-b" class="pt-1">5</div>
+                        </div>
+
+                        <div class="my-4 text-amber-600 text-2xl"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <p class="text-xs font-bold uppercase tracking-wider text-amber-800 mb-1">Hasil Bentuk Desimal</p>
+                        <div id="out-decimal-val" class="font-heading text-5xl font-extrabold text-amber-900 my-2">0.6</div>
+
+                        <!-- Realtime Feedback Guidance -->
+                        <div id="out-p2d-explain" class="mt-4 p-3 bg-white rounded-xl text-xs text-slate-700 border border-amber-200 text-left">
+                            Penjelasan otomatis akan tampil di sini.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATOR 2: Desimal ke Pecahan biasa -->
+            <div id="sim-d2p" class="sim-block hidden bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-amber-200">
+                <h3 class="font-heading text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-arrows-rotate text-emerald-600"></i> Simulator 2: Ubah Desimal ke Pecahan Biasa
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-6 bg-emerald-50 p-6 rounded-2xl border border-emerald-200">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">
+                                Ketik Angka Bilangan Desimal:
+                            </label>
+                            <input type="number" step="any" id="input-dec-slider" value="0.75" oninput="updateSimD2P()" class="w-full p-3 bg-white border-2 border-emerald-300 rounded-xl outline-none focus:border-emerald-500 text-emerald-800 font-extrabold text-xl font-mono shadow-sm transition-all">
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-emerald-100 to-teal-50 p-6 rounded-2xl text-center border-2 border-emerald-300">
+                        <p class="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1">Bilangan Desimal</p>
+                        <div id="out-dec-val" class="font-heading text-4xl font-extrabold text-emerald-900 mb-3">0.75</div>
+
+                        <div class="my-2 text-emerald-600 text-xl"><i class="fa-solid fa-arrow-down"></i></div>
+
+                        <p class="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-1">Pecahan Sederhana</p>
+                        <div class="font-mono text-3xl font-bold text-slate-800 inline-block bg-white px-6 py-2 rounded-xl border border-emerald-300 shadow-sm">
+                            <span id="out-d2p-num">3</span> / <span id="out-d2p-den">4</span>
+                        </div>
+
+                        <div id="out-d2p-explain" class="mt-4 p-3 bg-white rounded-xl text-xs text-slate-700 border border-emerald-200 text-left">
+                            Penjelasan penyederhanaan desimal.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATOR 3: Penjumlahan & Pengurangan -->
+            <div id="sim-add" class="sim-block hidden bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-amber-200">
+                <h3 class="font-heading text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-plus-minus text-sky-600"></i> Simulator 3: Penjumlahan & Pengurangan Desimal
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4 bg-sky-50 p-6 rounded-2xl border border-sky-200">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Bilangan Pertama A:</label>
+                            <input type="number" id="sim-add-a" value="3.45" step="0.05" oninput="updateSimAdd()" class="w-full p-3 rounded-xl border border-sky-300 font-bold text-slate-800">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Operasi Hitung:</label>
+                            <select id="sim-add-op" onchange="updateSimAdd()" class="w-full p-3 rounded-xl border border-sky-300 font-bold text-slate-800">
+                                <option value="+">Penjumlahan (+)</option>
+                                <option value="-">Pengurangan (-)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Bilangan Kedua B:</label>
+                            <input type="number" id="sim-add-b" value="1.8" step="0.05" oninput="updateSimAdd()" class="w-full p-3 rounded-xl border border-sky-300 font-bold text-slate-800">
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-900 text-white p-6 rounded-2xl flex flex-col justify-center border-2 border-sky-400">
+                        <p class="text-xs font-sans text-sky-300 uppercase font-bold mb-3 text-center">Visual Penjajaran Koma Tegak Lurus</p>
+                        <div class="font-mono text-2xl text-right space-y-1 pr-8">
+                            <div id="align-num-a">3,45</div>
+                            <div id="align-num-b" class="border-b-2 border-white pb-1">+ 1,80</div>
+                            <div id="align-result" class="text-amber-400 font-bold pt-1">5,25</div>
+                        </div>
+                        <p id="align-explain" class="text-xs font-sans text-slate-300 mt-4 text-center bg-slate-800 p-2 rounded-lg">
+                            Koma desimal sudah sejajar tegak lurus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATOR 4: Perkalian & Pembagian -->
+            <div id="sim-mul" class="sim-block hidden bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-amber-200">
+                <h3 class="font-heading text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-xmark text-purple-600"></i> Simulator 4: Perkalian & Pembagian Desimal
+                </h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="space-y-4 bg-purple-50 p-6 rounded-2xl border border-purple-200">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Bilangan A:</label>
+                            <input type="number" id="sim-mul-a" value="1.2" step="0.1" oninput="updateSimMul()" class="w-full p-3 rounded-xl border border-purple-300 font-bold text-slate-800">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Pilih Operasi:</label>
+                            <select id="sim-mul-op" onchange="updateSimMul()" class="w-full p-3 rounded-xl border border-purple-300 font-bold text-slate-800">
+                                <option value="*">Perkalian (×)</option>
+                                <option value="/">Pembagian (÷)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Bilangan B:</label>
+                            <input type="number" id="sim-mul-b" value="0.4" step="0.1" oninput="updateSimMul()" class="w-full p-3 rounded-xl border border-purple-300 font-bold text-slate-800">
+                        </div>
+                    </div>
+
+                    <div class="bg-purple-900 text-white p-6 rounded-2xl flex flex-col justify-center border-2 border-purple-400">
+                        <p class="text-xs font-sans text-purple-200 uppercase font-bold mb-2 text-center">Langkah Penghitungan Otomatis</p>
+                        <div id="mul-result-val" class="text-center font-heading text-4xl font-extrabold text-amber-300 my-2">0.48</div>
+                        <div id="mul-explain" class="text-xs font-sans text-purple-100 bg-purple-800/80 p-3 rounded-xl leading-relaxed">
+                            Penjelasan langkah perkalian/pembagian.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 4: KUIS EVALUASI FORMATIF ================= -->
+        <section id="tab-kuis" class="tab-content hidden max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-amber-200">
+                
+                <!-- Quiz Header & Identity Input Form -->
+                <div id="quiz-start-box" class="text-center max-w-lg mx-auto py-6">
+                    <div class="w-16 h-16 rounded-3xl bg-amber-100 text-amber-600 flex items-center justify-center text-3xl mx-auto mb-4">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Kuis Formatif Bilangan Desimal</h2>
+                    <p class="text-sm text-slate-600 mb-6">Silakan isi identitas diri murid sebelum memulai evaluasi 10 soal interaktif.</p>
+
+                    <form id="quiz-identitas-form" onsubmit="startQuiz(event)" class="space-y-4 text-left">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-700 mb-1">Nama Lengkap Murid *</label>
+                            <input type="text" id="quiz-nama" required placeholder="Masukkan nama kamu..." class="w-full p-3 rounded-xl border-2 border-amber-300 focus:border-amber-500 outline-none text-slate-800 font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-slate-700 mb-1">Kelas / Madrasah *</label>
+                            <input type="text" id="quiz-kelas" required placeholder="Contoh: VI-A / MIS Al-Falah" class="w-full p-3 rounded-xl border-2 border-amber-300 focus:border-amber-500 outline-none text-slate-800 font-semibold">
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold rounded-2xl shadow-md transition text-base flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-play"></i> Mulai Kerjakan Kuis Now
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Quiz Main Interactive Area (Hidden initially) -->
+                <div id="quiz-active-area" class="hidden">
+                    <!-- Progress Bar & Identity Header -->
+                    <div class="flex flex-wrap items-center justify-between pb-4 border-b border-slate-200 mb-6 gap-2">
+                        <div>
+                            <span id="quiz-display-nama" class="font-bold text-slate-800 text-sm">Nama Murid</span>
+                            <span class="text-slate-400 mx-1">|</span>
+                            <span id="quiz-display-kelas" class="text-xs text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md font-semibold">Kelas VI</span>
+                        </div>
+                        <div class="text-xs font-bold text-slate-500">
+                            Soal <span id="quiz-current-num" class="text-amber-600 font-extrabold text-base">1</span> dari 10
+                        </div>
+                    </div>
+
+                    <!-- Question Card Container -->
+                    <div id="quiz-questions-wrapper" class="space-y-8">
+                        <!-- Questions JS injected dynamically or pre-rendered -->
+                    </div>
+
+                    <!-- Submit Quiz Button -->
+                    <div class="mt-8 pt-6 border-t border-slate-200 text-center">
+                        <button id="btn-submit-quiz" onclick="evaluateQuiz()" class="px-8 py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-2xl shadow-lg transition text-lg flex items-center justify-center gap-2 mx-auto">
+                            <i class="fa-solid fa-paper-plane"></i> Selesai & Kirim Jawaban
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result Score Box (Hidden initially) -->
+                <div id="quiz-result-area" class="hidden text-center py-6">
+                    <div class="w-20 h-20 rounded-full bg-yellow-100 text-amber-600 flex items-center justify-center text-4xl mx-auto mb-4 border-4 border-yellow-300">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h2 class="font-heading text-3xl font-bold text-slate-900 mb-1">Hasil Kuis Evaluasi</h2>
+                    <p class="text-sm text-slate-600 mb-4">Pencapaian belajar desimal kamu:</p>
+
+                    <div class="bg-amber-50 rounded-2xl p-6 max-w-md mx-auto border-2 border-amber-300 mb-6">
+                        <div id="quiz-final-score" class="font-heading text-6xl font-extrabold text-amber-600 mb-2">0</div>
+                        <div id="quiz-feedback-msg" class="text-sm font-bold text-slate-800">Memuat umpan balik...</div>
+                    </div>
+
+                    <div id="quiz-review-container" class="text-left space-y-4 max-w-2xl mx-auto mb-8">
+                        <h4 class="font-heading font-bold text-lg text-slate-900">Pembahasan Detail Soal Evaluasi:</h4>
+                        <div id="quiz-review-list" class="space-y-3"></div>
+                    </div>
+
+                    <button onclick="resetQuiz()" class="px-6 py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold rounded-xl transition shadow">
+                        <i class="fa-solid fa-rotate-right"></i> Ulangi Kuis
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= SECTION 5: INFO PENGEMBANG & REFERENSI ================= -->
+        <section id="tab-info" class="tab-content hidden max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Card Developer Info -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-amber-200">
+                    <div class="flex items-center gap-2 mb-6 text-amber-700 font-bold">
+                        <i class="fa-solid fa-id-card text-2xl"></i>
+                        <h3 class="font-heading text-2xl text-slate-900">Informasi Pengembang</h3>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-6 mb-6 bg-amber-50/70 p-5 rounded-2xl border border-amber-200">
+                        <img src="https://iili.io/ncNNZDF.jpg" onerror="this.src='https://placehold.co/150x150/f59e0b/ffffff?text=Sri+Meylanti'" alt="Sri Meylanti S. Ali" class="w-28 h-28 rounded-2xl object-cover border-4 border-white shadow-md">
+                        <div class="text-center sm:text-left space-y-1">
+                            <h4 class="font-heading text-xl font-bold text-slate-900">Sri Meylanti S. Ali</h4>
+                            <p class="text-amber-800 font-semibold text-sm"><i class="fa-solid fa-chalkboard-user mr-1"></i> Guru / Pengembang Media</p>
+                            <p class="text-xs text-slate-600 font-medium"><i class="fa-solid fa-building-columns mr-1"></i> MIS Al-Falah</p>
+                            <p class="text-xs text-slate-500"><i class="fa-solid fa-map-pin mr-1"></i> Kanwil Kemenag Prov. Gorontalo</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+                        <p class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <b>Catatan Kurikulum:</b> Media Pembelajaran Interaktif (MPI) ini dirancang khusus untuk memperkuat pemahaman operasi hitung desimal peserta didik Madrasah Ibtidaiyah dengan menerapkan prinsip Kurikulum Merdeka dan integrasi nilai akhlak mulia.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card References & Objectives -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border-2 border-amber-200">
+                    <div class="flex items-center gap-2 mb-6 text-amber-700 font-bold">
+                        <i class="fa-solid fa-book-bookmark text-2xl"></i>
+                        <h3 class="font-heading text-2xl text-slate-900">Referensi Pembelajaran</h3>
+                    </div>
+
+                    <ul class="space-y-3 text-xs sm:text-sm text-slate-700">
+                        <li class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i>
+                            <div>
+                                <b>Buku Teks Utama:</b> Matematika untuk SD/MI Kelas VI (Fase C), Kemendikbudristek & Kementerian Agama Republik Indonesia.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i>
+                            <div>
+                                <b>Capaian Pembelajaran (CP) Matematika Fase C:</b> Elemen Bilangan - Operasi hitung penjumlahan, pengurangan, perkalian, dan pembagian bilangan desimal.
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3 bg-slate-50 p-3 rounded-xl border border-slate-200">
+                            <i class="fa-solid fa-check-circle text-emerald-500 mt-1"></i>
+                            <div>
+                                <b>Panduan Pembelajaran Madrasah:</b> Peningkatan karakter <i>Cinta Ilmu, Cinta Diri, dan Cinta Sesama</i> melalui konteks sosio-agraris Gorontalo.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t-4 border-amber-400 text-xs">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p class="font-semibold text-white">MPI Bilangan Desimal - Madrasah Ibtidaiyah Kelas VI</p>
+            <p>&copy; 2026 Sri Meylanti S. Ali (MIS Al-Falah) - Kanwil Kemenag Provinsi Gorontalo.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL: TUJUAN PEMBELAJARAN -->
+    <div id="modal-tujuan" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border-2 border-amber-300 relative animate-fade-in">
+            <button onclick="closeModal('modal-tujuan')" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-slate-100 text-slate-600 hover:bg-amber-100 flex items-center justify-center font-bold">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-4 text-amber-600">
+                <i class="fa-solid fa-bullseye text-3xl"></i>
+                <h3 class="font-heading text-2xl font-bold text-slate-900">Tujuan Pembelajaran</h3>
+            </div>
+            <div class="space-y-3 text-sm text-slate-700 leading-relaxed mb-6">
+                <p class="p-3 bg-amber-50 rounded-xl border border-amber-200 font-medium">
+                    1. Murid dapat memahami nilai tempat bilangan desimal (persepuluhan, perseratusan, perseribuan) dengan benar.
+                </p>
+                <p class="p-3 bg-amber-50 rounded-xl border border-amber-200 font-medium">
+                    2. Murid dapat melakukan konversi pecahan biasa ke desimal dan sebaliknya secara terampil.
+                </p>
+                <p class="p-3 bg-amber-50 rounded-xl border border-amber-200 font-medium">
+                    3. Murid mampu menyelesaikan operasi hitung (penjumlahan, pengurangan, perkalian, pembagian) desimal serta mengaplikasikannya dalam soal cerita agraris sebagai wujud cinta ilmu dan kepedulian sesama.
+                </p>
+            </div>
+            <button onclick="closeModal('modal-tujuan')" class="w-full py-3 bg-amber-400 hover:bg-amber-500 text-slate-900 font-bold rounded-xl shadow transition">
+                Tutup & Mulai Belajar
+            </button>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // =======================================================
+        // KONFIGURASI DATABASE: Paste URL Web App GAS Anda di sini
+        // =======================================================
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxOWsGUeYwwg1TdrpcpMK_M-WEAPMdDX5rgXfOtJC0s6zBli2Jn9aQuHCs2-di2kGMa/exec";
+        
+        // Global State & Navigation
+        let currentSlide = 1;
+        const totalSlides = 7;
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('block'));
+            
+            const target = document.getElementById('tab-' + tabId);
+            if (target) {
+                target.classList.remove('hidden');
+                target.classList.add('block');
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-400', 'text-slate-900', 'shadow-sm');
+                btn.classList.add('hover:bg-amber-100', 'text-slate-700');
+            });
+
+            const activeNav = document.getElementById('nav-' + tabId);
+            if (activeNav) {
+                activeNav.classList.add('bg-amber-400', 'text-slate-900', 'shadow-sm');
+                activeNav.classList.remove('hover:bg-amber-100', 'text-slate-700');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function goToSlide(slideNum) {
+            currentSlide = slideNum;
+            document.querySelectorAll('.materi-slide').forEach(el => el.classList.add('hidden'));
+            document.getElementById('materi-slide-' + slideNum).classList.remove('hidden');
+
+            document.querySelectorAll('.slide-nav-btn').forEach((btn, idx) => {
+                if (idx + 1 === slideNum) {
+                    btn.className = "slide-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-400 text-slate-900 transition";
+                } else {
+                    btn.className = "slide-nav-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 text-slate-600 hover:bg-amber-100 transition";
+                }
+            });
+
+            document.getElementById('slide-indicator').innerText = slideNum + ' / ' + totalSlides;
+        }
+
+        function changeSlide(direction) {
+            let next = currentSlide + direction;
+            if (next < 1) next = 1;
+            if (next > totalSlides) next = totalSlides;
+            goToSlide(next);
+        }
+
+        function switchSim(simId) {
+            document.querySelectorAll('.sim-block').forEach(el => el.classList.add('hidden'));
+            document.getElementById(simId).classList.remove('hidden');
+
+            document.querySelectorAll('.sim-nav-btn').forEach(btn => {
+                btn.className = "sim-nav-btn px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 hover:bg-amber-100";
+            });
+            const activeBtn = document.getElementById('sim-tab-' + simId.replace('sim-', ''));
+            if (activeBtn) {
+                activeBtn.className = "sim-nav-btn px-4 py-2 rounded-xl text-sm font-bold bg-amber-400 text-slate-900 shadow-sm";
+            }
+        }
+
+        // Simulator 1: P2D
+        function updateSimP2D() {
+            const a = parseFloat(document.getElementById('input-pembilang').value) || 0;
+            const b = parseFloat(document.getElementById('input-penyebut').value);
+            
+            document.getElementById('out-frac-a').innerText = a;
+            document.getElementById('out-frac-b').innerText = isNaN(b) ? 1 : b;
+
+            let cleanRes = "-";
+            if (b === 0) {
+                document.getElementById('out-decimal-val').innerText = "Tak Terdefinisi";
+                document.getElementById('out-p2d-explain').innerHTML = 
+                    `<b class="text-rose-600">Peringatan:</b> Pembagian dengan angka nol (0) tidak dapat didefinisikan! Silakan ganti angka penyebut.`;
+            } else {
+                const res = a / b;
+                cleanRes = Number.isInteger(res) ? res.toString() : parseFloat(res.toFixed(5)).toString();
+                document.getElementById('out-decimal-val').innerText = cleanRes;
+
+                document.getElementById('out-p2d-explain').innerHTML = 
+                    `<b>Penalaran:</b> Nilai pecahan sama dengan pembagian biasa. ${a} dibagi ${b} hasilnya adalah <b>${cleanRes}</b>.`;
+            }
+        }
+
+        // Simulator 2: D2P
+        function gcd(a, b) {
+            return b ? gcd(b, a % b) : a;
+        }
+        
+        function updateSimD2P() {
+            const valStr = document.getElementById('input-dec-slider').value;
+            const val = parseFloat(valStr) || 0;
+            
+            document.getElementById('out-dec-val').innerText = isNaN(val) ? "0" : valStr;
+
+            if (isNaN(val)) {
+                document.getElementById('out-d2p-explain').innerHTML = `Masukkan angka desimal yang valid.`;
+                return;
+            }
+
+            let decPlaces = 0;
+            if (valStr.includes('.')) {
+                decPlaces = valStr.split('.')[1].length;
+            }
+            
+            if(decPlaces > 6) decPlaces = 6; // Limit to prevent overly large fractions
+            
+            const den = Math.pow(10, decPlaces);
+            const num = Math.round(Math.abs(val) * den);
+            const g = gcd(num, den);
+
+            const simpleNum = num / g;
+            const simpleDen = den / g;
+
+            // Handle negative numbers properly for fraction display
+            const finalNum = val < 0 ? -simpleNum : simpleNum;
+
+            document.getElementById('out-d2p-num').innerText = finalNum;
+            document.getElementById('out-d2p-den').innerText = simpleDen;
+
+            document.getElementById('out-d2p-explain').innerHTML = 
+                `<b>Penalaran:</b> Bilangan <b>${valStr}</b> memiliki ${decPlaces} angka di belakang koma, sehingga bentuk pecahannya adalah <sup>${val < 0 ? '-' : ''}${num}</sup>/<sub>${den}</sub>.<br>FPB dari pembilang dan penyebut adalah ${g}. Setelah disederhanakan dengan dibagi ${g}, hasilnya <b><sup>${finalNum}</sup>/<sub>${simpleDen}</sub></b>.`;
+        }
+
+        // Simulator 3: Add/Sub
+        function updateSimAdd() {
+            const a = parseFloat(document.getElementById('sim-add-a').value) || 0;
+            const b = parseFloat(document.getElementById('sim-add-b').value) || 0;
+            const op = document.getElementById('sim-add-op').value;
+
+            document.getElementById('align-num-a').innerText = a.toLocaleString('id-ID', {minimumFractionDigits: 2});
+            document.getElementById('align-num-b').innerText = (op === '+' ? '+ ' : '- ') + b.toLocaleString('id-ID', {minimumFractionDigits: 2});
+
+            let res = op === '+' ? a + b : a - b;
+            document.getElementById('align-result').innerText = res.toLocaleString('id-ID', {minimumFractionDigits: 2});
+
+            document.getElementById('align-explain').innerText = 
+                `Perhatikan bahwa koma desimal ${a} dan ${b} diluruskan sejajar tegak lurus sebelum dihitung.`;
+        }
+
+        // Simulator 4: Mul/Div
+        function updateSimMul() {
+            const a = parseFloat(document.getElementById('sim-mul-a').value) || 0;
+            const b = parseFloat(document.getElementById('sim-mul-b').value) || 1;
+            const op = document.getElementById('sim-mul-op').value;
+
+            let res = op === '*' ? a * b : a / b;
+            document.getElementById('mul-result-val').innerText = parseFloat(res.toFixed(4)).toString();
+
+            if (op === '*') {
+                document.getElementById('mul-explain').innerText = 
+                    `Perkalian: Kalikan ${a} × ${b} seolah tanpa koma, lalu jumlahkan digit dibelakang koma. Hasil = ${res.toFixed(4)}`;
+            } else {
+                document.getElementById('mul-explain').innerText = 
+                    `Pembagian: Kalikan kedua bilangan dengan 10 hingga penyebut bulat, lalu bagi secara biasa. Hasil = ${res.toFixed(4)}`;
+            }
+        }
+
+        // Quiz Data Bank (10 Soal Variatif)
+        const quizData = [
+            {
+                id: 1,
+                type: 'pg',
+                question: '1. Pada bilangan desimal 15,372, angka 7 menempati nilai tempat...',
+                options: ['Satuan', 'Persepuluhan', 'Perseratusan', 'Perseribuan'],
+                correct: 2,
+                explain: 'Angka 3 = persepuluhan, 7 = perseratusan, dan 2 = perseribuan.'
+            },
+            {
+                id: 2,
+                type: 'pg',
+                question: '2. Bentuk desimal paling sederhana dari pecahan biasa 3/5 adalah...',
+                options: ['0,35', '0,5', '0,6', '0,75'],
+                correct: 2,
+                explain: '3/5 = (3 × 2) / (5 × 2) = 6/10 = 0,6.'
+            },
+            {
+                id: 3,
+                type: 'pg_kompleks',
+                question: '3. (PG Kompleks) Pilih SEMUA pernyataan yang BENAR mengenai kesetaraan pecahan dan desimal di bawah ini!',
+                options: [
+                    '0,5 sama nilainya dengan 1/2',
+                    '0,25 sama nilainya dengan 1/4',
+                    '0,3 sama nilainya dengan 3/100',
+                    '0,75 sama nilainya dengan 3/4'
+                ],
+                correct: [0, 1, 3],
+                explain: 'Pernyataan 0,3 = 3/100 salah, karena 0,3 seharusnya 3/10. Pernyataan lainnya benar!'
+            },
+            {
+                id: 4,
+                type: 'bs',
+                question: '4. (Benar / Salah) Hasil penjumlahan desimal dari 2,45 + 1,3 adalah 3,75.',
+                options: ['Benar', 'Salah'],
+                correct: 0, // Benar
+                explain: '2,45 + 1,30 = 3,75. Penjumlahan ini BENAR.'
+            },
+            {
+                id: 5,
+                type: 'matching',
+                question: '5. (Menjodohkan) Pasangkan pecahan biasa dengan desimalnya yang tepat!',
+                pairs: [
+                    { left: '1/2', options: ['0.2', '0.5', '0.75'], correct: '0.5' },
+                    { left: '3/4', options: ['0.2', '0.5', '0.75'], correct: '0.75' },
+                    { left: '1/5', options: ['0.2', '0.5', '0.75'], correct: '0.2' }
+                ],
+                explain: '1/2 = 0,5; 3/4 = 0,75; 1/5 = 0,2.'
+            },
+            {
+                id: 6,
+                type: 'pg',
+                question: '6. Ibu membeli 2,5 kg jagung hibrida Gorontalo, lalu Paman membawa tambahan 1,75 kg. Berapa total jagung tersebut?',
+                options: ['3,25 kg', '4,25 kg', '4,50 kg', '3,75 kg'],
+                correct: 1,
+                explain: '2,50 kg + 1,75 kg = 4,25 kg.'
+            },
+            {
+                id: 7,
+                type: 'pg_kompleks',
+                question: '7. (PG Kompleks) Manakah di antara operasi hitung berikut yang hasilnya SAMA DENGAN 1,5?',
+                options: [
+                    '0,75 + 0,75',
+                    '3,0 ÷ 2',
+                    '0,5 × 3',
+                    '2,0 - 0,8'
+                ],
+                correct: [0, 1, 2],
+                explain: '0,75+0,75=1,5; 3,0÷2=1,5; 0,5×3=1,5. Sedangkan 2,0-0,8 = 1,2.'
+            },
+            {
+                id: 8,
+                type: 'bs',
+                question: '8. (Benar / Salah) Perkalian desimal 0,4 × 0,2 menghasilkan 0,8.',
+                options: ['Benar', 'Salah'],
+                correct: 1, // Salah
+                explain: '0,4 × 0,2 = 0,08 (ada 2 angka desimal). Jadi pernyataan di atas SALAH.'
+            },
+            {
+                id: 9,
+                type: 'pg',
+                question: '9. Pak Ahmad membagi 6,4 meter tali rami secara merata kepada 4 murid madrasah. Panjang tali setiap murid adalah...',
+                options: ['1,2 meter', '1,4 meter', '1,6 meter', '2,4 meter'],
+                correct: 2,
+                explain: '6,4 ÷ 4 = 1,6 meter.'
+            },
+            {
+                id: 10,
+                type: 'matching',
+                question: '10. (Menjodohkan) Jodohkan operasi hitung desimal berikut dengan hasilnya!',
+                pairs: [
+                    { left: '0,6 + 0,4', options: ['1,0', '0,6', '2,0'], correct: '1,0' },
+                    { left: '0,9 - 0,3', options: ['1,0', '0,6', '2,0'], correct: '0,6' },
+                    { left: '0,5 × 4', options: ['1,0', '0,6', '2,0'], correct: '2,0' }
+                ],
+                explain: '0,6+0,4 = 1,0; 0,9-0,3 = 0,6; 0,5×4 = 2,0.'
+            }
+        ];
+
+        function startQuiz(e) {
+            e.preventDefault();
+            const nama = document.getElementById('quiz-nama').value;
+            const kelas = document.getElementById('quiz-kelas').value;
+
+            document.getElementById('quiz-display-nama').innerText = nama;
+            document.getElementById('quiz-display-kelas').innerText = kelas;
+
+            document.getElementById('quiz-start-box').classList.add('hidden');
+            document.getElementById('quiz-active-area').classList.remove('hidden');
+
+            renderQuizQuestions();
+        }
+
+        function renderQuizQuestions() {
+            const wrapper = document.getElementById('quiz-questions-wrapper');
+            wrapper.innerHTML = '';
+
+            quizData.forEach((item, index) => {
+                const qCard = document.createElement('div');
+                qCard.className = 'bg-slate-50 p-5 rounded-2xl border border-slate-200';
+
+                let htmlContent = `<h4 class="font-bold text-slate-800 text-sm sm:text-base mb-3">${item.question}</h4>`;
+
+                if (item.type === 'pg' || item.type === 'bs') {
+                    htmlContent += `<div class="space-y-2">`;
+                    item.options.forEach((opt, oIdx) => {
+                        htmlContent += `
+                            <label class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50 transition">
+                                <input type="radio" name="q_${item.id}" value="${oIdx}" class="accent-amber-500 w-4 h-4">
+                                <span class="text-xs sm:text-sm text-slate-700">${opt}</span>
+                            </label>
+                        `;
+                    });
+                    htmlContent += `</div>`;
+                } else if (item.type === 'pg_kompleks') {
+                    htmlContent += `<div class="space-y-2">`;
+                    item.options.forEach((opt, oIdx) => {
+                        htmlContent += `
+                            <label class="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200 cursor-pointer hover:bg-amber-50 transition">
+                                <input type="checkbox" name="q_${item.id}" value="${oIdx}" class="accent-amber-500 w-4 h-4 rounded">
+                                <span class="text-xs sm:text-sm text-slate-700">${opt}</span>
+                            </label>
+                        `;
+                    });
+                    htmlContent += `</div>`;
+                } else if (item.type === 'matching') {
+                    htmlContent += `<div class="space-y-3">`;
+                    item.pairs.forEach((p, pIdx) => {
+                        htmlContent += `
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 p-3 bg-white rounded-xl border border-slate-200">
+                                <span class="font-mono font-bold text-amber-900 text-sm">${p.left}</span>
+                                <select name="q_${item.id}_${pIdx}" class="p-2 rounded-lg border border-slate-300 text-xs font-semibold bg-slate-50">
+                                    <option value="">-- Pilih Pasangan --</option>
+                                    ${p.options.map(opt => `<option value="${opt}">${opt}</option>`).join('')}
+                                </select>
+                            </div>
+                        `;
+                    });
+                    htmlContent += `</div>`;
+                }
+
+                qCard.innerHTML = htmlContent;
+                wrapper.appendChild(qCard);
+            });
+        }
+
+        async function evaluateQuiz() {
+            const btnSubmit = document.getElementById('btn-submit-quiz');
+            const originalBtnText = btnSubmit.innerHTML;
+            
+            // Ubah tombol untuk memberikan indikator loading saat proses simpan
+            btnSubmit.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan Jawaban...`;
+            btnSubmit.disabled = true;
+            btnSubmit.classList.add('opacity-70', 'cursor-not-allowed');
+
+            let totalScore = 0;
+            let correctCount = 0;
+            let wrongCount = 0;
+            const reviewList = [];
+            const detailJawabanSiswa = []; // Menyimpan semua riwayat pilihan/inputan spesifik
+
+            quizData.forEach((item) => {
+                let isCorrect = false;
+                let userAnswer = null;
+
+                if (item.type === 'pg' || item.type === 'bs') {
+                    const selected = document.querySelector(`input[name="q_${item.id}"]:checked`);
+                    if (selected) {
+                        userAnswer = parseInt(selected.value);
+                        if (userAnswer === item.correct) {
+                            isCorrect = true;
+                            totalScore += 10;
+                            correctCount++;
+                        } else {
+                            wrongCount++;
+                        }
+                        // Terjemahkan indeks ke teks pilihan untuk laporan detail
+                        userAnswer = item.options[userAnswer];
+                    } else {
+                        wrongCount++;
+                        userAnswer = "Tidak Dijawab";
+                    }
+                } else if (item.type === 'pg_kompleks') {
+                    const selectedNodes = document.querySelectorAll(`input[name="q_${item.id}"]:checked`);
+                    if (selectedNodes.length > 0) {
+                        const selectedIdx = Array.from(selectedNodes).map(el => parseInt(el.value));
+                        selectedIdx.sort();
+                        const target = [...item.correct].sort();
+                        
+                        if (JSON.stringify(selectedIdx) === JSON.stringify(target)) {
+                            isCorrect = true;
+                            totalScore += 10;
+                            correctCount++;
+                        } else {
+                            wrongCount++;
+                        }
+                        // Terjemahkan array indeks ke teks untuk laporan detail
+                        userAnswer = selectedIdx.map(i => item.options[i]).join(', ');
+                    } else {
+                        wrongCount++;
+                        userAnswer = "Tidak Dijawab";
+                    }
+                } else if (item.type === 'matching') {
+                    let matchAll = true;
+                    userAnswer = [];
+                    item.pairs.forEach((p, pIdx) => {
+                        const sel = document.querySelector(`select[name="q_${item.id}_${pIdx}"]`);
+                        const ans = sel ? sel.value : "";
+                        userAnswer.push(`[${p.left} -> ${ans || 'Kosong'}]`);
+                        
+                        if (!sel || ans !== p.correct) {
+                            matchAll = false;
+                        }
+                    });
+                    userAnswer = userAnswer.join(', ');
+
+                    if (matchAll) {
+                        isCorrect = true;
+                        totalScore += 10;
+                        correctCount++;
+                    } else {
+                        wrongCount++;
+                    }
+                }
+
+                // Simpan ke array riwayat
+                detailJawabanSiswa.push({
+                    id_soal: item.id,
+                    pertanyaan: item.question,
+                    jawaban_yang_dipilih: userAnswer,
+                    status: isCorrect ? "BENAR" : "SALAH"
+                });
+
+                reviewList.push({
+                    question: item.question,
+                    isCorrect: isCorrect,
+                    explain: item.explain
+                });
+            });
+
+            // 1. Siapkan payload data untuk dikirim ke Google Sheets (GAS)
+            const payloadData = {
+                nama: document.getElementById('quiz-display-nama').innerText,
+                kelas: document.getElementById('quiz-display-kelas').innerText,
+                benar: correctCount,
+                salah: wrongCount,
+                skor: totalScore,
+                detail: JSON.stringify(detailJawabanSiswa, null, 2),
+                quizData: quizData // Ini dikirim sesekali agar GAS bisa buat Sheet 'Soal' otomatis jika masih kosong
+            };
+
+            // 2. Lakukan pengiriman di background
+            if (WEB_APP_URL !== "MASUKAN_URL_WEB_APP_GOOGLE_SCRIPT_DISINI") {
+                try {
+                    await fetch(WEB_APP_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify(payloadData)
+                    });
+                } catch (error) {
+                    console.error("Gagal mengirim data ke spreadsheet:", error);
+                    // Meskipun error (misal jaringan putus), kuis tetap menampilkan hasil
+                }
+            } else {
+                console.warn("WEB_APP_URL belum diatur. Data tidak disimpan ke Database.");
+            }
+
+            // Kembalikan status tombol
+            btnSubmit.innerHTML = originalBtnText;
+            btnSubmit.disabled = false;
+            btnSubmit.classList.remove('opacity-70', 'cursor-not-allowed');
+
+            // 3. Tampilkan hasil kuis di layar
+            document.getElementById('quiz-active-area').classList.add('hidden');
+            document.getElementById('quiz-result-area').classList.remove('hidden');
+            document.getElementById('quiz-final-score').innerText = totalScore;
+
+            let msg = '';
+            if (totalScore >= 80) {
+                msg = "🌟 EKSELEN! Pemahaman desimal kamu sangat luar biasa!";
+            } else if (totalScore >= 60) {
+                msg = "👍 BAGUS! Pemahaman kamu sudah baik, mari tingkatkan lagi!";
+            } else {
+                msg = "💪 TETAP SEMANGAT! Mari pelajari kembali modul materi & simulator!";
+            }
+            document.getElementById('quiz-feedback-msg').innerText = msg;
+
+            // Render Pembahasan
+            const reviewContainer = document.getElementById('quiz-review-list');
+            reviewContainer.innerHTML = '';
+            reviewList.forEach((r, idx) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = `p-4 rounded-2xl border text-xs sm:text-sm ${r.isCorrect ? 'bg-emerald-50 border-emerald-200' : 'bg-rose-50 border-rose-200'}`;
+                itemDiv.innerHTML = `
+                    <div class="flex items-center justify-between font-bold mb-1">
+                        <span>Soal ${idx + 1}</span>
+                        <span class="${r.isCorrect ? 'text-emerald-700' : 'text-rose-700'}">
+                            <i class="fa-solid ${r.isCorrect ? 'fa-check-circle' : 'fa-xmark-circle'}"></i> ${r.isCorrect ? 'Benar (+10)' : 'Belum Tepat (0)'}
+                        </span>
+                    </div>
+                    <p class="text-slate-600 mb-2">${r.explain}</p>
+                `;
+                reviewContainer.appendChild(itemDiv);
+            });
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-result-area').classList.add('hidden');
+            document.getElementById('quiz-start-box').classList.remove('hidden');
+        }
+
+        // Onload Initialization
+        window.onload = function() {
+            updateSimP2D();
+            updateSimD2P();
+            updateSimAdd();
+            updateSimMul();
+        };
+    </script>
+</body>
+</html>
